@@ -8,32 +8,16 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       # Compile Latex
-      - name: LaTeX compilation
-      # You may pin to the exact commit or the version.
-      # uses: dante-ev/latex-action@259e5ff953ad4d4616fbd09cc87a526ee5c4499a
-        uses: dante-ev/latex-action@v0.2.0
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
         with:
-          # The root LaTeX file to be compiled
-          root_file: main.tex 
-          # The working directory for the latex compiler to be invoked
-          working_directory: ./
-          # LaTeX engine to be used
-          # compiler: # optional, default is latexmk
-          # Extra arguments to be passed to the latex compiler
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -jobname=./published/main
-          # Install extra packages by apt-get
-          # extra_system_packages: # optional
-#       - name: Compile LaTeX document
-#         uses: xu-cheng/latex-action@v2
-#         with:
-#           root_file: main.tex          
-#       - name: Attach PDF to Release
-#         uses: actions/upload-release-asset@v1
-#         with:
-#           upload_url: ${{ steps.release.outputs.upload_url }}
-#           asset_path: ./
-#           asset_name: 'main.pdf'
-#           asset_content_type: application/pdf
+          root_file: main.tex
+          pre_compile: mkdir ./published/
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+          post_compile: |
+            mkdir ./published/
+            mv main.pdf ./published/main.pdf
+            latexmk -c
 #       # Upload it as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v2
