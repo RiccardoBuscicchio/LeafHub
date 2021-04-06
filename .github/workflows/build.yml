@@ -17,16 +17,20 @@ jobs:
             latexmk -c
             mkdir ./published/
             mv main.pdf ./published/main.pdf
-#       # Upload it as an artifact
+      # Upload it as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: main.pdf
           path: ./published/main.pdf
-#       # Publish it as a GitHub Page
-#       - name: Publish generated content to GitHub Pages
-#         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
-#         with:
-#           dir: ./published/
-#           branch: main
-#           token: ${{ secrets.ACCESS_TOKEN }}
+      # Publish it as a GitHub Page
+      - name: Release
+        run: cargo build --release
+      - name: Upload file to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./published/main.pdf
+          asset_name: release
+          overwrite: true
+        body: "This is my release text"
