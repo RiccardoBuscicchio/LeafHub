@@ -20,7 +20,7 @@ jobs:
           # LaTeX engine to be used
           # compiler: # optional, default is latexmk
           # Extra arguments to be passed to the latex compiler
-          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -jobname=./published/
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -jobname=./published/main
           # Install extra packages by apt-get
           # extra_system_packages: # optional
 #       - name: Compile LaTeX document
