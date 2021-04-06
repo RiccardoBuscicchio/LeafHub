@@ -1,8 +1,5 @@
 name: Build Latex and Publish to GitHub Pages
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   build_publish:
     runs-on: ubuntu-latest
