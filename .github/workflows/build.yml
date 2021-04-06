@@ -33,4 +33,4 @@ jobs:
           file: ./published/main.pdf
           asset_name: release
           overwrite: true
-        body: "This is my release text"
+          body: "Here is a new release!"
