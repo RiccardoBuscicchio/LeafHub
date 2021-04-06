@@ -12,16 +12,20 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex  
-      # Upload it as an artifact
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: notes.pdf
-          path: main.pdf
+      # Move file to the published content folder
+      - name: Copy file
+        run: |
+          mv main.pdf ./published/main.pdf
+#       # Upload it as an artifact
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: notes.pdf
+#           path: main.pdf
       # Publish it as a GitHub Page
       - name: Publish generated content to GitHub Pages
         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
         with:
-          dir: ./main.pdf
-          branch: gh-pages
+          dir: ./published/
+          branch: main
           token: ${{ secrets.ACCESS_TOKEN }}
