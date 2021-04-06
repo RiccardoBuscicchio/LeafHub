@@ -8,24 +8,42 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       # Compile Latex
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+      - name: LaTeX compilation
+      # You may pin to the exact commit or the version.
+      # uses: dante-ev/latex-action@259e5ff953ad4d4616fbd09cc87a526ee5c4499a
+        uses: dante-ev/latex-action@v0.2.0
         with:
-          root_file: main.tex  
-      # Move file to the published content folder
-      - name: Copy file
-        run: |
-          mv main.pdf ./published/main.pdf
-#       # Upload it as an artifact
-#       - name: Upload artifact
-#         uses: actions/upload-artifact@v2
+          # The root LaTeX file to be compiled
+          root_file: main.tex 
+          # The working directory for the latex compiler to be invoked
+          working_directory: ./
+          # LaTeX engine to be used
+          # compiler: # optional, default is latexmk
+          # Extra arguments to be passed to the latex compiler
+          args: -pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode -jobname=./published/
+          # Install extra packages by apt-get
+          # extra_system_packages: # optional
+#       - name: Compile LaTeX document
+#         uses: xu-cheng/latex-action@v2
 #         with:
-#           name: notes.pdf
-#           path: main.pdf
-      # Publish it as a GitHub Page
-      - name: Publish generated content to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+#           root_file: main.tex          
+#       - name: Attach PDF to Release
+#         uses: actions/upload-release-asset@v1
+#         with:
+#           upload_url: ${{ steps.release.outputs.upload_url }}
+#           asset_path: ./
+#           asset_name: 'main.pdf'
+#           asset_content_type: application/pdf
+#       # Upload it as an artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
-          dir: ./published/
-          branch: main
-          token: ${{ secrets.ACCESS_TOKEN }}
+          name: notes.pdf
+          path: ./published/main.pdf
+#       # Publish it as a GitHub Page
+#       - name: Publish generated content to GitHub Pages
+#         uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+#         with:
+#           dir: ./published/
+#           branch: main
+#           token: ${{ secrets.ACCESS_TOKEN }}
