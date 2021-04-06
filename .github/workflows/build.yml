@@ -12,17 +12,16 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
-          pre_compile: mkdir ./published/
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
           post_compile: |
+            latexmk -c
             mkdir ./published/
             mv main.pdf ./published/main.pdf
-            latexmk -c
 #       # Upload it as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: notes.pdf
+          name: main.pdf
           path: ./published/main.pdf
 #       # Publish it as a GitHub Page
 #       - name: Publish generated content to GitHub Pages
