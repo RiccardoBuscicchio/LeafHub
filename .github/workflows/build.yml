@@ -1,17 +1,30 @@
-name: Build LaTeX document
-on: [push]
+name: Build and Publish to GitHub Page
+on:
+  push:
+    branches:
+      - master
 jobs:
-  build_latex:
+  build_publish:
     runs-on: ubuntu-latest
     steps:
+      # Check out the repository
       - name: Set up Git repository
         uses: actions/checkout@v2
+      # Compile Latex
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: main.tex  
+      # Upload it as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: PDF
+          name: notes.pdf
           path: main.pdf
+      # Publish it as a GitHub Page
+      - name: Publish generated content to GitHub Pages
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+        with:
+          dir: ./main.pdf
+          branch: gh-pages
+          token: ${{ secrets.ACCESS_TOKEN }}
