@@ -1,4 +1,4 @@
-name: Build and Publish to GitHub Page
+name: Build Latex and Publish to GitHub Pages
 on:
   push:
     branches:
