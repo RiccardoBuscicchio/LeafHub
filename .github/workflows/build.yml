@@ -23,14 +23,3 @@ jobs:
         with:
           name: main.pdf
           path: ./published/main.pdf
-      # Publish it as a GitHub Page
-      - name: Release
-        run: cargo build --release
-      - name: Upload file to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./published/main.pdf
-          asset_name: release
-          overwrite: true
-          body: "Here is a new release!"
