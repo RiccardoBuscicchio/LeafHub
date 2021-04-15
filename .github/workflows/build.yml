@@ -28,3 +28,10 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: published # The folder the action should deploy.
+      - name: Deploy_orphan
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./published          # default: public
+          publish_branch: empty  # default: gh-pages
+          force_orphan: true
